@@ -1,171 +1,631 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sr-Cyrl">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Torba Vuka | Premium Farm Food for Belgrade IT Offices</title>
-    <!-- Tailwind CSS via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Торба Вука - Микро-маркети 24/7</title>
+    
+    <!-- Подключаем только заголовочные шрифты. Resavska BG Sans будет использоваться из системы или через @font-face -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Marck+Script&display=swap" rel="stylesheet">
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; }
+        /* 
+         * Если у вас есть файлы шрифта Resavska BG Sans (например, .woff2),
+         * раскомментируйте этот блок и положите файлы в папку с сайтом:
+         *
+         * @font-face {
+         *     font-family: 'Resavska BG Sans';
+         *     src: url('ResavskaBGSans-Regular.woff2') format('woff2');
+         *     font-weight: normal;
+         *     font-style: normal;
+         * }
+         * @font-face {
+         *     font-family: 'Resavska BG Sans';
+         *     src: url('ResavskaBGSans-Bold.woff2') format('woff2');
+         *     font-weight: bold;
+         *     font-style: normal;
+         * }
+         */
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            /* Главный шрифт - Resavska BG Sans. Если его нет на компьютере, сработает запасной похожий гуманистический гротеск */
+            font-family: 'Resavska BG Sans', 'Fira Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #440029; 
+            color: #FCD7B7; 
+            line-height: 1.6;
+            position: relative;
+        }
+
+        h2, h3 {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Language Switcher */
+        .lang-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+        .lang-btn {
+            background: rgba(252, 215, 183, 0.1);
+            border: 1px solid #FCD7B7;
+            color: #FCD7B7;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: inherit; /* Наследует Resavska */
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+        .lang-btn:hover { background: rgba(252, 215, 183, 0.3); }
+        .lang-btn.active { background: #FCD7B7; color: #440029; }
+
+        /* HERO SECTION */
+        .hero {
+            background-color: #440029; 
+            padding: 60px 20px;
+            border-bottom: 1px dashed rgba(252, 215, 183, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px; 
+        }
+        .hero .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 50px; 
+            max-width: 1200px;
+            width: 100%;
+        }
+        .hero img {
+            max-width: 350px; 
+            flex-shrink: 0;
+        }
+        .hero-text {
+            text-align: left;
+            max-width: 600px;
+        }
+        .hero h1 {
+            font-family: 'Marck Script', cursive;
+            font-size: 64px; 
+            margin-bottom: 5px;
+            line-height: 1.1;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+        .hero p.subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 26px;
+            font-weight: 500;
+            opacity: 0.95;
+            font-style: italic;
+            line-height: 1.3;
+        }
+
+        /* Sections */
+        section { padding: 60px 0; }
+        .section-title {
+            font-size: 32px;
+            text-align: center;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #FCD7B7;
+            display: inline-block;
+            padding-bottom: 10px;
+            font-weight: 700;
+        }
+        .text-center { text-align: center; }
+
+        /* Concept Grid */
+        .concept-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+        .concept-text p { font-size: 17px; margin-bottom: 20px; text-align: justify; }
+        .benefits-list { list-style: none; }
+        .benefits-list li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 15px;
+            font-size: 17px;
+        }
+        .benefits-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #FCD7B7;
+            font-weight: bold;
+            font-size: 18px;
+            font-family: sans-serif;
+        }
+
+        /* Formats Grid */
+        .formats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .format-card {
+            border: 1px solid #FCD7B7;
+            border-radius: 12px;
+            padding: 30px;
+            background-color: rgba(252, 215, 183, 0.03);
+            transition: transform 0.3s ease;
+        }
+        .format-card:hover { transform: translateY(-5px); background-color: rgba(252, 215, 183, 0.08); }
+        .format-card h3 { font-size: 26px; margin-bottom: 15px; border-bottom: 1px dashed #FCD7B7; padding-bottom: 10px; text-align: center; }
+        .format-card p { font-size: 16px; margin-bottom: 10px;}
+
+        /* Menu Grid */
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
+        .menu-card {
+            border: 1px solid rgba(252, 215, 183, 0.2);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            background-color: rgba(252, 215, 183, 0.02);
+            transition: border-color 0.3s ease;
+        }
+        .menu-card:hover { border-color: #FCD7B7; }
+        
+        .menu-img {
+            flex-shrink: 0;
+            width: 100px;
+            height: 100px;
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .menu-img img { width: 100%; height: 100%; object-fit: contain; border-radius: 12px; }
+        .menu-img.beverage { background-color: #fff; padding: 8px; border-radius: 16px; }
+
+        .menu-info { flex-grow: 1; }
+        .menu-title { font-size: 20px; font-weight: 700; margin-bottom: 5px; font-family: 'Cormorant Garamond', serif;}
+        .menu-desc { font-size: 14px; opacity: 0.9; margin-bottom: 12px; line-height: 1.3; font-family: inherit;}
+        .menu-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 15px;
+            font-weight: bold;
+            border-top: 1px dashed rgba(252, 215, 183, 0.3);
+            padding-top: 10px;
+            font-family: inherit;
+        }
+        .price { font-size: 16px; background: #FCD7B7; color: #440029; padding: 2px 8px; border-radius: 6px; }
+
+        /* Terms */
+        .terms-grid { display: grid; gap: 15px; max-width: 900px; margin: 0 auto; }
+        .term-row { display: flex; border-bottom: 1px solid rgba(252, 215, 183, 0.2); padding: 15px 0; font-size: 16px; }
+        .term-row:last-child { border-bottom: none; }
+        .term-title { width: 30%; font-weight: bold; padding-right: 20px; border-right: 1px dashed rgba(252, 215, 183, 0.3); }
+        .term-desc { width: 70%; padding-left: 20px; }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid rgba(252, 215, 183, 0.2);
+            font-size: 16px;
+            background-color: rgba(0, 0, 0, 0.15);
+        }
+        footer a { color: #FCD7B7; text-decoration: none; font-weight: bold; }
+        footer a:hover { text-decoration: underline; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero .container { flex-direction: column; text-align: center; gap: 20px;}
+            .hero-text { text-align: center; }
+            .hero img { max-width: 250px; }
+            .hero h1 { font-size: 48px; }
+            .concept-grid { grid-template-columns: 1fr; gap: 20px; }
+            .menu-card { flex-direction: column; text-align: center; }
+            .menu-img { margin-right: 0; margin-bottom: 15px; width: 120px; height: 120px; }
+            .menu-meta { flex-direction: column; gap: 10px; }
+            .term-row { flex-direction: column; }
+            .term-title { width: 100%; border-right: none; padding-right: 0; margin-bottom: 5px; border-bottom: 1px dashed rgba(252, 215, 183, 0.3); padding-bottom: 5px; }
+            .term-desc { width: 100%; padding-left: 0; }
+        }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900 antialiased">
+<body>
 
-    <!-- Header / Nav -->
-    <header class="max-w-6xl mx-auto px-4 py-6 flex justify-between items-center">
-        <div class="flex items-center space-x-2">
-            <!-- Orange Dot representation of our Mascot style -->
-            <span class="w-4 h-4 rounded-full bg-orange-500"></span>
-            <span class="text-xl font-bold tracking-tight text-slate-900">torba<span class="text-orange-500">vuka.</span></span>
-        </div>
-        <a href="#contact" class="bg-slate-900 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-slate-800 transition">Get a Fridge</a>
-    </header>
+    <!-- Language Switcher -->
+    <div class="lang-switcher">
+        <button id="btn-sr" class="lang-btn active" onclick="switchLang('sr')">СРБ</button>
+        <button id="btn-en" class="lang-btn" onclick="switchLang('en')">EN</button>
+    </div>
 
-    <!-- Hero Section -->
-    <section class="max-w-4xl mx-auto px-4 pt-16 pb-20 text-center">
-        <h1 class="text-4xl sm:text-6xl font-extrabold text-slate-900 tracking-tight leading-none mb-6">
-            Premium Farm Food for <br class="hidden sm:inline">Belgrade IT Offices.
-        </h1>
-        <p class="text-xl text-orange-600 font-semibold mb-6">Grab & Go in 3 seconds. Zero apps needed.</p>
-        
-        <div class="max-w-2xl mx-auto text-left bg-white p-6 rounded-2xl border border-slate-200 shadow-sm mb-10">
-            <p class="text-slate-600 leading-relaxed">
-                <strong>Hey there.</strong> I am a software engineer, and I love balanced, high-quality food. After years in tech, I got tired of endless delivery waiting times and plastic fast food. So I started <strong>Torba Vuka</strong>. 
-            </p>
-            <p class="text-slate-600 leading-relaxed mt-3">
-                We partnered with authentic Serbian family farms (Domaćinstva) to bring fresh, craft meals straight to your office breakout area. No registrations, no scanning QR codes, no slop. Just real food.
-            </p>
-        </div>
-
-        <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
-            <a href="#contact" class="w-full sm:w-auto bg-orange-500 text-white font-medium px-8 py-4 rounded-xl hover:bg-orange-600 transition shadow-lg shadow-orange-500/20 text-lg">
-                Get Free Fridge for Our Team
-            </a>
-            <a href="YOUR_LINKEDIN_URL_HERE" target="_blank" class="w-full sm:w-auto bg-white text-slate-700 font-medium px-8 py-4 rounded-xl hover:bg-slate-100 transition border border-slate-200 text-lg">
-                Connect on LinkedIn
-            </a>
-        </div>
-    </section>
-
-    <!-- How It Works -->
-    <section class="bg-slate-900 text-white py-20">
-        <div class="max-w-5xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12">Pure Win-Win. How it works:</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                <!-- Step 1 -->
-                <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700">
-                    <div class="w-12 h-12 bg-orange-500/10 text-orange-500 rounded-xl flex items-center justify-center text-xl font-bold mx-auto mb-4">1</div>
-                    <h3 class="text-xl font-semibold mb-2">Open & Take</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Walk up to our "honest" open fridge in your breakout zone. Pick any premium craft bowl you want.</p>
-                </div>
-                <!-- Step 2 -->
-                <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700">
-                    <div class="w-12 h-12 bg-orange-500/10 text-orange-500 rounded-xl flex items-center justify-center text-xl font-bold mx-auto mb-4">2</div>
-                    <h3 class="text-xl font-semibold mb-2">Tap Your Card</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Press the button corresponding to your meal on the simple standalone terminal and tap to pay (Tap-to-Pay).</p>
-                </div>
-                <!-- Step 3 -->
-                <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700">
-                    <div class="w-12 h-12 bg-orange-500/10 text-orange-500 rounded-xl flex items-center justify-center text-xl font-bold mx-auto mb-4">3</div>
-                    <h3 class="text-xl font-semibold mb-2">Enjoy Real Food</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Eat fresh kajmak, artisanal Šumadija cured meats, or fresh berries with cream. The purchase took exactly 3 seconds.</p>
-                </div>
+    <!-- HERO SECTION (Идеально для LinkedIn Cover) -->
+    <header class="hero">
+        <div class="container">
+            <img src="logo_3.png" alt="Torba Vuka Logo">
+            <div class="hero-text">
+                <h1>
+                    <span class="lang sr">Поједи нормално,<br>Вук је донео</span>
+                    <span class="lang en" style="display:none; font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: bold; text-transform: uppercase;">Eat real food,<br>brought by Vuk</span>
+                </h1>
+                <p class="subtitle">
+                    <span class="lang sr">Микро-маркети са фарме и готова храна 24/7 за канцеларијске раднике</span>
+                    <span class="lang en" style="display:none;">Farm-to-office micro-markets & ready meals 24/7 for employees</span>
+                </p>
             </div>
         </div>
-    </section>
+    </header>
 
-    <!-- For HR Section -->
-    <section class="max-w-4xl mx-auto px-4 py-20">
-        <div class="bg-orange-50 rounded-3xl p-8 md:p-12 border border-orange-200 flex flex-col md:flex-row items-center justify-between gap-8">
-            <div class="max-w-xl">
-                <h2 class="text-2xl md:text-3xl font-bold text-slate-900 mb-4">For HR & Office Managers: Absolutely Zero Cost</h2>
-                <ul class="space-y-3 text-slate-700">
-                    <li class="flex items-start">
-                        <span class="text-orange-500 mr-2">✓</span> <strong>0 EUR Installation:</strong> We bring, set up, and maintain the fridge completely free.
+    <!-- About Project -->
+    <section>
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-title">
+                    <span class="lang sr">О пројекту</span>
+                    <span class="lang en" style="display:none;">About the Project</span>
+                </h2>
+            </div>
+            <div class="concept-grid">
+                <div class="concept-text">
+                    <p class="lang sr">Идеја пројекта <strong>„Торба Вука”</strong> је једноставна: желимо да канцеларијски радници имају 24/7 приступ правој храни и одабраним производима малих пољопривредника из Србије.</p>
+                    <p class="lang en" style="display:none;">The idea behind the <strong>"Torba Vuka"</strong> project is simple: we want office workers to have 24/7 access to real food and selected products from small Serbian farmers.</p>
+                    
+                    <p class="lang sr">Циљ је да запослени могу да једу нормалну, кувану храну по истој цени по којој су до сада куповали индустријске грицкалице. На овај начин запослени добијају здравију алтернативу, а локални произвођачи директну економску корист.</p>
+                    <p class="lang en" style="display:none;">The goal is for employees to eat normal, cooked meals at the same price they previously paid for industrial snacks. This way, employees get a healthier alternative, and local producers gain direct economic benefits.</p>
+                </div>
+                <ul class="benefits-list">
+                    <li>
+                        <strong class="lang sr">Повећање задовољства тима:</strong>
+                        <strong class="lang en" style="display:none;">Increased team satisfaction:</strong>
+                        <span class="lang sr"> Приступ квалитетној храни на послу штеди време паузе и решава свакодневни проблем "шта јести данас".</span>
+                        <span class="lang en" style="display:none;"> Access to quality food at work saves break time and solves the daily "what to eat today" problem.</span>
                     </li>
-                    <li class="flex items-start">
-                        <span class="text-orange-500 mr-2">✓</span> <strong>1 Square Meter:</strong> All we need is a tiny bit of space and a standard power outlet.
+                    <li>
+                        <strong class="lang sr">Подршка локалној заједници (ЕСГ):</strong>
+                        <strong class="lang en" style="display:none;">Support for local community (ESG):</strong>
+                        <span class="lang sr"> Директно подржавате мале фарме (месо из Баната, сир са Пештера, малине из Мачве).</span>
+                        <span class="lang en" style="display:none;"> You directly support small farms (meat from Banat, cheese from Pešter, raspberries from Mačva).</span>
                     </li>
-                    <li class="flex items-start">
-                        <span class="text-orange-500 mr-2">✓</span> <strong>Full Operations on Us:</strong> Daily restocking, strict quality control, and cleaning are handled by our team.
+                    <li>
+                        <strong class="lang sr">Флексибилност без трошкова:</strong>
+                        <strong class="lang en" style="display:none;">Zero hidden costs:</strong>
+                        <span class="lang sr"> Постављање, одржавање и свакодневно пуњење је наша обавеза.</span>
+                        <span class="lang en" style="display:none;"> Installation, maintenance, and daily restocking are 100% our responsibility.</span>
                     </li>
                 </ul>
             </div>
-            <div class="text-center bg-white p-6 rounded-2xl border border-orange-100 shadow-sm shrink-0">
-                <span class="block text-sm font-semibold uppercase tracking-wider text-slate-400 mb-1">Company Budget</span>
-                <span class="text-4xl font-black text-slate-900">0 RSD</span>
-                <span class="block text-xs text-slate-500 mt-1">Free employee benefit</span>
+        </div>
+    </section>
+
+    <!-- Installation Formats -->
+    <section style="background-color: rgba(0,0,0,0.1);">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-title">
+                    <span class="lang sr">Формати имплементације</span>
+                    <span class="lang en" style="display:none;">Implementation Formats</span>
+                </h2>
+            </div>
+            <div class="formats-grid">
+                <div class="format-card">
+                    <h3>
+                        <span class="lang sr">Опција 1: Микро-маркет<br><span style="font-size:18px; font-weight:normal; font-style: italic;">(Отворени фрижидер)</span></span>
+                        <span class="lang en" style="display:none;">Option 1: Micro-market<br><span style="font-size:18px; font-weight:normal; font-style: italic;">(Open Fridge)</span></span>
+                    </h3>
+                    <p class="lang sr"><strong>Како ради:</strong> Поставља се отворена расхладна витрина у зони за одмор.</p>
+                    <p class="lang en" style="display:none;"><strong>How it works:</strong> An open display fridge is installed in the break area.</p>
+                    
+                    <p class="lang sr"><strong>Плаћање:</strong> Концепт поверења. Запослени сами узимају оброк и плаћају скенирањем QR кода или картицом на терминалу.</p>
+                    <p class="lang en" style="display:none;"><strong>Payment:</strong> Trust concept. Employees take a meal and pay by scanning a QR code or using a card terminal.</p>
+                    
+                    <p class="lang sr"><strong>Примена:</strong> Погодно за компаније са затвореним канцеларијским просторима.</p>
+                    <p class="lang en" style="display:none;"><strong>Best for:</strong> IT companies and offices with secure, closed environments.</p>
+                </div>
+                <div class="format-card">
+                    <h3>
+                        <span class="lang sr">Опција 2: Паметни аутомат<br><span style="font-size:18px; font-weight:normal; font-style: italic;">(Smart Vending)</span></span>
+                        <span class="lang en" style="display:none;">Option 2: Smart Vending<br><span style="font-size:18px; font-weight:normal; font-style: italic;">(Smart Machine)</span></span>
+                    </h3>
+                    <p class="lang sr"><strong>Како ради:</strong> Затворени систем са лифтом који безбедно и нежно спушта храну до корисника.</p>
+                    <p class="lang en" style="display:none;"><strong>How it works:</strong> A closed system with an internal lift that safely and gently lowers food to the user.</p>
+                    
+                    <p class="lang sr"><strong>Плаћање:</strong> Бесконтактно, пре преузимања оброка.</p>
+                    <p class="lang en" style="display:none;"><strong>Payment:</strong> Contactless, before dispensing the meal.</p>
+                    
+                    <p class="lang sr"><strong>Примена:</strong> Погодно за веће системе и ходнике са великом фреквенцијом људи.</p>
+                    <p class="lang en" style="display:none;"><strong>Best for:</strong> Large business centers, busy corridors, and shift-work facilities.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Concrete Menu Preview -->
-    <section class="bg-white border-y border-slate-200 py-20">
-        <div class="max-w-4xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center text-slate-900 mb-2">Tested & Approved Menu</h2>
-            <p class="text-slate-500 text-center mb-12">Sourced directly from local Serbian households (Domaćinstva).</p>
+    <!-- Menu -->
+    <section>
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-title">
+                    <span class="lang sr">Стандардни Мени</span>
+                    <span class="lang en" style="display:none;">Standard Menu</span>
+                </h2>
+                <p style="margin-bottom: 40px; opacity: 0.9; font-style: italic;">
+                    <span class="lang sr">Сви производи се припремају на дан испоруке.<br>Наведене цене су малопродајне и плаћају их запослени.</span>
+                    <span class="lang en" style="display:none;">All products are prepared on the day of delivery.<br>The listed prices are retail and paid by the employees.</span>
+                </p>
+            </div>
             
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div class="p-4 bg-slate-50 rounded-xl border border-slate-100">
-                    <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full uppercase">Breakfast</span>
-                    <h3 class="font-bold text-slate-900 mt-2">Domaći Kajmak + Pita</h3>
-                    <p class="text-slate-500 text-sm mt-1">Fresh local kajmak, traditional hand-stretched pastry, and garden greens.</p>
+            <div class="menu-grid">
+                <!-- Beverages -->
+                <div class="menu-card">
+                    <div class="menu-img beverage"><img src="juice.png" alt="Juice"></div>
+                    <div class="menu-info">
+                        <div class="menu-title">
+                            <span class="lang sr">Сок од јагоде</span>
+                            <span class="lang en" style="display:none;">Strawberry Juice</span>
+                        </div>
+                        <div class="menu-desc">
+                            <span class="lang sr">Цеђени сок од домаћих јагода, без додатог шећера.</span>
+                            <span class="lang en" style="display:none;">Freshly squeezed domestic strawberry juice, no added sugar.</span>
+                        </div>
+                        <div class="menu-meta">
+                            <span class="lang sr">330 ml</span>
+                            <span class="lang en" style="display:none;">330 ml</span>
+                            <span class="price">240 RSD</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="p-4 bg-slate-50 rounded-xl border border-slate-100">
-                    <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2.5 py-1 rounded-full uppercase">Lunch</span>
-                    <h3 class="font-bold text-slate-900 mt-2">Sremski Kulen & Aged Cheese</h3>
-                    <p class="text-slate-500 text-sm mt-1">Premium cured meat, hard block cheese, homemade ajvar, and craft crackers.</p>
+
+                <div class="menu-card">
+                    <div class="menu-img beverage"><img src="yoghurt.png" alt="Yogurt"></div>
+                    <div class="menu-info">
+                        <div class="menu-title">
+                            <span class="lang sr">Јогурт са шумским плодовима</span>
+                            <span class="lang en" style="display:none;">Wild Berry Yogurt</span>
+                        </div>
+                        <div class="menu-desc">
+                            <span class="lang sr">Јогурт са домаћим купинама и малинама.</span>
+                            <span class="lang en" style="display:none;">Thick farmer's yogurt with domestic blackberries and raspberries.</span>
+                        </div>
+                        <div class="menu-meta">
+                            <span>330 ml</span>
+                            <span class="price">190 RSD</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="p-4 bg-slate-50 rounded-xl border border-slate-100">
-                    <span class="text-xs font-bold text-purple-600 bg-purple-50 px-2.5 py-1 rounded-full uppercase">Dessert</span>
-                    <h3 class="font-bold text-slate-900 mt-2">Fresh Raspberries & Cream</h3>
-                    <p class="text-slate-500 text-sm mt-1">Hand-picked seasonal Šumadija berries with light whipped cream.</p>
+
+                <!-- Snacks -->
+                <div class="menu-card">
+                    <div class="menu-img"><img src="meal1.png" alt="Meze"></div>
+                    <div class="menu-info">
+                        <div class="menu-title">
+                            <span class="lang sr">Традиционални мезе</span>
+                            <span class="lang en" style="display:none;">Traditional Meze</span>
+                        </div>
+                        <div class="menu-desc">
+                            <span class="lang sr">Домаћа сува кобасица, сјенички сир и ајвар.</span>
+                            <span class="lang en" style="display:none;">Domestic dry sausage, Sjenički cheese, and ajvar.</span>
+                        </div>
+                        <div class="menu-meta"><span>150 g</span> <span class="price">450 RSD</span></div>
+                    </div>
                 </div>
-                <div class="p-4 bg-slate-50 rounded-xl border border-slate-100">
-                    <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full uppercase">Drinks</span>
-                    <h3 class="font-bold text-slate-900 mt-2">Cold-Pressed Matični Sok</h3>
-                    <p class="text-slate-500 text-sm mt-1">100% natural apple and sour cherry juice, zero added sugar or water.</p>
+
+                <div class="menu-card">
+                    <div class="menu-img"><img src="meal5.png" alt="Pršuta"></div>
+                    <div class="menu-info">
+                        <div class="menu-title">
+                            <span class="lang sr">Пршута и сир</span>
+                            <span class="lang en" style="display:none;">Prosciutto & Cheese</span>
+                        </div>
+                        <div class="menu-desc">
+                            <span class="lang sr">Српска пршута врхунског квалитета, сир и ајвар.</span>
+                            <span class="lang en" style="display:none;">Premium quality Serbian prosciutto, traditional cheese, and ajvar.</span>
+                        </div>
+                        <div class="menu-meta"><span>150 g</span> <span class="price">490 RSD</span></div>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div class="menu-img"><img src="meal2.png" alt="Voće"></div>
+                    <div class="menu-info">
+                        <div class="menu-title">
+                            <span class="lang sr">Бобичасто воће са сиром</span>
+                            <span class="lang en" style="display:none;">Berries with Cheese & Dip</span>
+                        </div>
+                        <div class="menu-desc">
+                            <span class="lang sr">Свеже малине, купине, сир и лагани биљни умак.</span>
+                            <span class="lang en" style="display:none;">Fresh raspberries, blackberries, traditional cheese, and herbal dip.</span>
+                        </div>
+                        <div class="menu-meta"><span>200 g</span> <span class="price">380 RSD</span></div>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div class="menu-img"><img src="meal6.png" alt="Somun"></div>
+                    <div class="menu-info">
+                        <div class="menu-title">
+                            <span class="lang sr">Домаћи сомун са кајмаком</span>
+                            <span class="lang en" style="display:none;">Homemade Somun with Kajmak</span>
+                        </div>
+                        <div class="menu-desc">
+                            <span class="lang sr">Ручно прављен сомун са богатим кајмаком и биљем.</span>
+                            <span class="lang en" style="display:none;">Freshly baked somun bread with rich kajmak and herbs.</span>
+                        </div>
+                        <div class="menu-meta"><span>200 g</span> <span class="price">350 RSD</span></div>
+                    </div>
+                </div>
+
+                <!-- Hot Meals -->
+                <div class="menu-card">
+                    <div class="menu-img"><img src="meal3.png" alt="Prebranac"></div>
+                    <div class="menu-info">
+                        <div class="menu-title">
+                            <span class="lang sr">Запечени пребранац</span>
+                            <span class="lang en" style="display:none;">Baked Beans (Prebranac)</span>
+                        </div>
+                        <div class="menu-desc">
+                            <span class="lang sr">Традиционални пасуљ са домаћом кобасицом.</span>
+                            <span class="lang en" style="display:none;">Traditional baked beans with domestic sausage and sour cream.</span>
+                        </div>
+                        <div class="menu-meta"><span>350 g</span> <span class="price">490 RSD</span></div>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div class="menu-img"><img src="meal4.png" alt="Musaka"></div>
+                    <div class="menu-info">
+                        <div class="menu-title">
+                            <span class="lang sr">Домаћа мусака</span>
+                            <span class="lang en" style="display:none;">Homemade Moussaka</span>
+                        </div>
+                        <div class="menu-desc">
+                            <span class="lang sr">Класична мусака од кромпира и меса уз павлаку.</span>
+                            <span class="lang en" style="display:none;">Classic moussaka made of potatoes and minced meat with sour cream.</span>
+                        </div>
+                        <div class="menu-meta"><span>350 g</span> <span class="price">490 RSD</span></div>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div class="menu-img"><img src="meal8.png" alt="Sarma"></div>
+                    <div class="menu-info">
+                        <div class="menu-title">
+                            <span class="lang sr">Домаћа сарма</span>
+                            <span class="lang en" style="display:none;">Traditional Sarma</span>
+                        </div>
+                        <div class="menu-desc">
+                            <span class="lang sr">Аутентична сарма од киселог купуса, меса и пиринча.</span>
+                            <span class="lang en" style="display:none;">Authentic cabbage rolls with minced meat and rice.</span>
+                        </div>
+                        <div class="menu-meta"><span>350 g</span> <span class="price">490 RSD</span></div>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div class="menu-img"><img src="meal7.png" alt="Sir"></div>
+                    <div class="menu-info">
+                        <div class="menu-title">
+                            <span class="lang sr">Сир са слатком од малина</span>
+                            <span class="lang en" style="display:none;">Cheese with Raspberry Jam</span>
+                        </div>
+                        <div class="menu-desc">
+                            <span class="lang sr">Домаћи ситни сир са преливом од свежих малина.</span>
+                            <span class="lang en" style="display:none;">Domestic cottage cheese with fresh raspberry sauce.</span>
+                        </div>
+                        <div class="menu-meta"><span>200 g</span> <span class="price">380 RSD</span></div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Form Section -->
-    <section id="contact" class="max-w-xl mx-auto px-4 py-20 text-center">
-        <h2 class="text-3xl font-bold text-slate-900 mb-3">Join the Pilot Launch</h2>
-        <p class="text-slate-500 mb-8">We are selecting 3 progressive offices in Novi Beograd for our initial installation run.</p>
-        
-        <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-md text-left">
-            <p class="text-slate-700 font-medium mb-6 text-center">Want to test Torba Vuka in your workspace? Drop a line directly to the founder:</p>
+    <!-- Commercial Terms -->
+    <section style="background-color: rgba(0,0,0,0.1);">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-title">
+                    <span class="lang sr">Комерцијални услови</span>
+                    <span class="lang en" style="display:none;">Commercial Terms</span>
+                </h2>
+            </div>
             
-            <div class="space-y-3">
-                <!-- Telegram (Пуленепробиваемая ссылка по юзернейму) -->
-                <a href="https://t.me/andrei_lancer" target="_blank" class="block w-full bg-[#24A1DE] text-white text-center font-medium py-3.5 rounded-xl hover:bg-[#208ebd] transition text-lg flex items-center justify-center space-x-2">
-                    <span>💬 Text on Telegram</span>
-                </a>
-
-                <!-- WhatsApp (По твоему британскому номеру) -->
-                <a href="https://wa.me/447892652221" target="_blank" class="block w-full bg-[#25D366] text-white text-center font-medium py-3.5 rounded-xl hover:bg-[#20ba56] transition text-lg flex items-center justify-center space-x-2">
-                    <span>📱 Text on WhatsApp</span>
-                </a>
-
-                <div class="text-center text-xs text-slate-400 pt-4 pb-2 uppercase tracking-wider font-semibold">Or copy email address</div>
+            <div class="terms-grid">
+                <div class="term-row">
+                    <div class="term-title">
+                        <span class="lang sr">Опрема и инсталација</span>
+                        <span class="lang en" style="display:none;">Equipment & Installation</span>
+                    </div>
+                    <div class="term-desc">
+                        <span class="lang sr">Опрема се поставља потпуно бесплатно. Потребан је само око 1m² простора и стандардни прикључак за струју (220V).</span>
+                        <span class="lang en" style="display:none;">Equipment is installed completely free of charge. Requires only ~1m² of space and a standard power outlet (220V).</span>
+                    </div>
+                </div>
                 
-                <!-- Email для удобного копирования в один клик -->
-                <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-center font-mono text-slate-700 font-medium select-all hover:bg-slate-100 transition cursor-pointer" title="Click to select all">
-                    order@torbavuka.com
+                <div class="term-row">
+                    <div class="term-title">
+                        <span class="lang sr">Достава и одржавање</span>
+                        <span class="lang en" style="display:none;">Delivery & Maintenance</span>
+                    </div>
+                    <div class="term-desc">
+                        <span class="lang sr">Допуна хране се врши свакодневно. Одржавање чистоће апарата и техничка подршка су 100% обавеза "Торбе Вука".</span>
+                        <span class="lang en" style="display:none;">Restocking is done daily. Machine cleaning and technical support are 100% the responsibility of "Torba Vuka".</span>
+                    </div>
+                </div>
+
+                <div class="term-row">
+                    <div class="term-title">
+                        <span class="lang sr">Безбедност хране</span>
+                        <span class="lang en" style="display:none;">Food Safety</span>
+                    </div>
+                    <div class="term-desc">
+                        <span class="lang sr">Сви оброци се пакују у модификованој атмосфери (МАП). Сва непродата храна којој истиче рок се уклања о нашем трошку.</span>
+                        <span class="lang en" style="display:none;">All meals are packed in a modified atmosphere (MAP). Any unsold food reaching its expiration date is removed at our expense.</span>
+                    </div>
+                </div>
+
+                <div class="term-row">
+                    <div class="term-title">
+                        <span class="lang sr">Ценовна политика</span>
+                        <span class="lang en" style="display:none;">Pricing Policy</span>
+                    </div>
+                    <div class="term-desc">
+                        <span class="lang sr">Приказане цене плаћају искључиво крајњи корисници на лицу места. Не постоје фиксни трошкови за вашу компанију.</span>
+                        <span class="lang en" style="display:none;">The listed prices are paid exclusively by the end users on site. There are zero fixed costs for your company.</span>
+                    </div>
+                </div>
+
+                <div class="term-row">
+                    <div class="term-title">
+                        <span class="lang sr">Опције субвенционисања</span>
+                        <span class="lang en" style="display:none;">Subsidization (Optional)</span>
+                    </div>
+                    <div class="term-desc">
+                        <span class="lang sr">Уколико компанија жели да делимично или потпуно покрије трошкове оброка као бенефит, могуће је креирање наменских картица или месечно фактурисање.</span>
+                        <span class="lang en" style="display:none;">If the company wishes to cover meal costs as an employee benefit, custom employee cards or monthly invoicing can be arranged.</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="border-t border-slate-200 bg-slate-100 py-8 text-center text-sm text-slate-500">
-        <p>© 2026 Torba Vuka. Handcrafted with ❤️ by an engineer for engineers in Belgrade, Serbia.</p>
+    <footer>
+        <div class="container">
+            <p>
+                <span class="lang sr">Снабдевање, пуњење и одржавање опреме је у потпуности наша обавеза.</span>
+                <span class="lang en" style="display:none;">Supply, restocking, and equipment maintenance are entirely our responsibility.</span>
+            </p>
+            <p style="margin-top: 15px; font-size: 18px;">
+                <a href="mailto:a.ulanov@torbavuka.com">order@torbavuka.com</a> | 
+                <a href="http://www.torbavuka.com">www.torbavuka.com</a>
+            </p>
+        </div>
     </footer>
 
+    <!-- JS for Language Switcher -->
+    <script>
+        function switchLang(lang) {
+            document.querySelectorAll('.lang').forEach(el => {
+                el.style.display = 'none';
+            });
+            document.querySelectorAll('.lang.' + lang).forEach(el => {
+                if (el.tagName.toLowerCase() === 'span' || el.tagName.toLowerCase() === 'strong') {
+                    el.style.display = 'inline';
+                } else {
+                    el.style.display = 'block';
+                }
+            });
+            
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById('btn-' + lang).classList.add('active');
+        }
+    </script>
 </body>
 </html>
